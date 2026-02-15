@@ -1,0 +1,28 @@
+{
+    "issues": [
+        {
+            "title": "Failed to connect to peer",
+            "severity": "Critical",
+            "technical_explanation": "The node is unable to establish a connection with a peer, which is essential for network communication and block synchronization.",
+            "recommended_fix": "Check network connectivity, firewall settings, and ensure that the peer is online and reachable."
+        },
+        {
+            "title": "Low disk space",
+            "severity": "Warning",
+            "technical_explanation": "The node is running low on disk space, which can affect its ability to store blockchain data and logs.",
+            "recommended_fix": "Free up disk space by deleting unnecessary files or increasing the disk capacity."
+        },
+        {
+            "title": "Block sync stalled",
+            "severity": "Critical",
+            "technical_explanation": "The node has stopped syncing blocks at height 102934, which may indicate issues with peer connections or resource limitations.",
+            "recommended_fix": "Investigate peer connections, check for any errors in the log, and ensure that the node has sufficient resources to continue syncing."
+        },
+        {
+            "title": "Connection timeout",
+            "severity": "Warning",
+            "technical_explanation": "The node experienced a timeout while trying to connect to a peer after 30 seconds, indicating potential network issues.",
+            "recommended_fix": "Check network stability and peer availability, and consider increasing the timeout settings if necessary."
+        }
+    ]
+}

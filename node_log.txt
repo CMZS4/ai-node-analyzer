@@ -1,0 +1,4 @@
+Error: failed to connect to peer
+Warning: low disk space
+Block sync stalled at height 102934
+Connection timeout after 30s
