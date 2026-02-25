@@ -10,6 +10,7 @@ AI-powered blockchain node log analyzer that detects sync failures, peer connect
 - Identifies blockchain sync stalls
 - Flags disk space warnings
 - Provides technical remediation suggestions
+- Returns structured JSON output with severity levels
 
 ---
 
@@ -23,9 +24,40 @@ pip install -r requirements.txt
 
 Create a `.env` file in the project root:
 
-```
+```env
 OPENAI_API_KEY=your_api_key_here
 ```
+
+### Windows Quick Start
+
+Tested on Windows with Git and Python installed.
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/CMZS4/ai-node-analyzer.git
+   cd ai-node-analyzer
+   ```
+
+2. (Optional) Create a virtual environment:
+   ```bash
+   python -m venv .venv
+   .venv\Scripts\activate
+   ```
+
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Create `.env` and add your OpenAI API key:
+   ```env
+   OPENAI_API_KEY=your_api_key_here
+   ```
+
+5. Run:
+   ```bash
+   python app.py
+   ```
 
 ---
 
@@ -33,7 +65,7 @@ OPENAI_API_KEY=your_api_key_here
 
 Place your node log file as:
 
-```
+```txt
 node_log.txt
 ```
 
@@ -41,6 +73,12 @@ Run the analyzer:
 
 ```bash
 python app.py
+```
+
+Results are saved to:
+
+```txt
+analysis_result.json
 ```
 
 ---
@@ -55,8 +93,8 @@ python app.py
 
 ## Roadmap
 
-- Severity scoring
-- JSON export
+- CLI arguments (`--input`, `--output`)
+- Improved error handling
 - Web dashboard (Streamlit)
 - Docker support
 
