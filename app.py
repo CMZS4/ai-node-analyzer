@@ -112,7 +112,6 @@ def main() -> int:
         print("\n⚠ JSON parsing failed.")
         print("Error:", e)
 
-        # Optional debug output
         Path("raw_model_output.txt").write_text(analysis_text, encoding="utf-8")
         print("📝 Raw output saved to raw_model_output.txt")
         return 1
