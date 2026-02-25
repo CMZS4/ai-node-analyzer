@@ -105,4 +105,41 @@ Sample files are included in the `examples/` directory:
 - `examples/analysis_result.sample.json`
 ---
 
-Built for blockchain node operators and DevOps engineers.
+## CLI Usage Examples
+
+Run with default paths:
+
+```bash
+python app.py
+
+Run with a custom input file: 
+python app.py --input examples/node_log.sample.txt
+
+Run with a custom output file:
+
+python app.py --input examples/node_log.sample.txt --output examples/custom_result.json
+
+Troubleshooting
+OPENAI_API_KEY is missing
+
+Create a .env file in the project root and add:
+
+OPENAI_API_KEY=your_api_key_here
+
+Log file not found
+
+Make sure the input path exists, or use:
+
+python app.py --input path/to/your/node_log.txt
+
+JSON parsing failed
+
+Sometimes model output may not be valid JSON. In that case, the raw response is saved to:
+
+raw_model_output.txt
+
+You can inspect it and retry with a shorter or cleaner log input.
+
+
+
+
