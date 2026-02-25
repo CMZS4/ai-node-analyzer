@@ -1,3 +1,4 @@
+import argparse
 import json
 import os
 from pathlib import Path
@@ -6,9 +7,26 @@ from dotenv import load_dotenv
 from openai import OpenAI
 
 
-INPUT_LOG_FILE = Path("node_log.txt")
-OUTPUT_JSON_FILE = Path("analysis_result.json")
+DEFAULT_INPUT_LOG_FILE = Path("node_log.txt")
+DEFAULT_OUTPUT_JSON_FILE = Path("analysis_result.json")
 MODEL_NAME = "gpt-4o-mini"
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Analyze blockchain node logs and return structured JSON issues."
+    )
+    parser.add_argument(
+        "--input",
+        default=str(DEFAULT_INPUT_LOG_FILE),
+        help="Path to the node log file (default: node_log.txt)",
+    )
+    parser.add_argument(
+        "--output",
+        default=str(DEFAULT_OUTPUT_JSON_FILE),
+        help="Path to save JSON results (default: analysis_result.json)",
+    )
+    return parser.parse_args()
 
 
 def build_system_prompt() -> str:
@@ -74,24 +92,28 @@ def print_issues(parsed: dict) -> None:
 
 def save_results(parsed: dict, output_path: Path) -> None:
     output_path.write_text(json.dumps(parsed, indent=4), encoding="utf-8")
-    print(f"\n✅ Results saved to {output_path}")
+    print(f"\nResults saved to {output_path}")
 
 
 def main() -> int:
+    args = parse_args()
+    input_path = Path(args.input)
+    output_path = Path(args.output)
+
     load_dotenv()
 
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
-        print("❌ OPENAI_API_KEY is missing. Add it to your .env file.")
+        print("OPENAI_API_KEY is missing. Add it to your .env file.")
         return 1
 
     try:
-        log_data = load_log_file(INPUT_LOG_FILE)
+        log_data = load_log_file(input_path)
     except FileNotFoundError as e:
-        print(f"❌ {e}")
+        print(e)
         return 1
     except ValueError as e:
-        print(f"⚠ {e}")
+        print(e)
         return 1
 
     client = OpenAI(api_key=api_key)
@@ -99,7 +121,7 @@ def main() -> int:
     try:
         analysis_text = analyze_log(client, log_data)
     except Exception as e:
-        print("❌ OpenAI request failed.")
+        print("OpenAI request failed.")
         print("Error:", e)
         return 1
 
@@ -109,15 +131,15 @@ def main() -> int:
     try:
         parsed = json.loads(analysis_text)
     except json.JSONDecodeError as e:
-        print("\n⚠ JSON parsing failed.")
+        print("\nJSON parsing failed.")
         print("Error:", e)
 
         Path("raw_model_output.txt").write_text(analysis_text, encoding="utf-8")
-        print("📝 Raw output saved to raw_model_output.txt")
+        print("Raw output saved to raw_model_output.txt")
         return 1
 
     print_issues(parsed)
-    save_results(parsed, OUTPUT_JSON_FILE)
+    save_results(parsed, output_path)
     return 0
 
 
