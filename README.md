@@ -66,7 +66,7 @@ Tested on Windows with Git and Python installed.
 Place your node log file as:
 
 ```txt
-node_log.txt
+node_log.txt (or use the sample in examples/node_log.sample.txt)
 ```
 
 Run the analyzer:
@@ -97,7 +97,12 @@ analysis_result.json
 - Improved error handling
 - Web dashboard (Streamlit)
 - Docker support
+## Example Files
 
+Sample files are included in the `examples/` directory:
+
+- `examples/node_log.sample.txt`
+- `examples/analysis_result.sample.json`
 ---
 
 Built for blockchain node operators and DevOps engineers.
